@@ -1,0 +1,127 @@
+{
+  "model_version": "spatial-residual-v1.2",
+  "algorithm": "HistGradientBoostingRegressor",
+  "trained_at": "2026-09-30T02:10:05.687091Z",
+  "feature_cols": [
+    "block_rainfall",
+    "block_tmin",
+    "block_tmax",
+    "block_humidity",
+    "elevation_m",
+    "slope_deg",
+    "aspect_deg",
+    "has_station",
+    "doy_sin",
+    "doy_cos",
+    "hist_rain_7d"
+  ],
+  "targets": [
+    "rainfall_mm",
+    "tmin_c",
+    "tmax_c"
+  ],
+  "n_train": 10320,
+  "n_test": 610,
+  "hold_out_days": 60,
+  "runs": [
+    {
+      "target_variable": "rainfall_mm",
+      "metrics": {
+        "n": 610,
+        "baseline_mae": 0.037,
+        "mae": 0.102,
+        "baseline_rmse": 0.322,
+        "rmse": 0.345,
+        "baseline_r2": 0.918,
+        "r2": 0.906,
+        "improvement_pct": -172.1
+      },
+      "train_start": "2023-01-04",
+      "train_end": "2025-10-31",
+      "test_start": "2025-11-01",
+      "test_end": "2025-12-31"
+    },
+    {
+      "target_variable": "tmin_c",
+      "metrics": {
+        "n": 610,
+        "baseline_mae": 0.828,
+        "mae": 0.449,
+        "baseline_rmse": 1.041,
+        "rmse": 0.595,
+        "baseline_r2": 0.855,
+        "r2": 0.953,
+        "improvement_pct": 45.7
+      },
+      "train_start": "2023-01-04",
+      "train_end": "2025-10-31",
+      "test_start": "2025-11-01",
+      "test_end": "2025-12-31"
+    },
+    {
+      "target_variable": "tmax_c",
+      "metrics": {
+        "n": 610,
+        "baseline_mae": 0.546,
+        "mae": 0.259,
+        "baseline_rmse": 0.685,
+        "rmse": 0.341,
+        "baseline_r2": 0.874,
+        "r2": 0.969,
+        "improvement_pct": 52.6
+      },
+      "train_start": "2023-01-04",
+      "train_end": "2025-10-31",
+      "test_start": "2025-11-01",
+      "test_end": "2025-12-31"
+    }
+  ],
+  "feature_importance": {
+    "rainfall_mm": {
+      "block_rainfall": 0.5645,
+      "block_tmin": -0.2253,
+      "block_tmax": 0.6359,
+      "block_humidity": 0.143,
+      "elevation_m": 0.02,
+      "slope_deg": 0.0,
+      "aspect_deg": 0.0128,
+      "has_station": 0.0,
+      "doy_sin": 0.0139,
+      "doy_cos": 0.0,
+      "hist_rain_7d": -0.0383
+    },
+    "tmin_c": {
+      "block_rainfall": 0.0117,
+      "block_tmin": 0.1293,
+      "block_tmax": 0.0859,
+      "block_humidity": 0.2165,
+      "elevation_m": 0.3402,
+      "slope_deg": 0.0014,
+      "aspect_deg": 0.0639,
+      "has_station": 0.0339,
+      "doy_sin": -0.0299,
+      "doy_cos": 0.0156,
+      "hist_rain_7d": 0.0522
+    },
+    "tmax_c": {
+      "block_rainfall": -0.0011,
+      "block_tmin": -0.0399,
+      "block_tmax": -0.0211,
+      "block_humidity": 0.0224,
+      "elevation_m": 0.8576,
+      "slope_deg": 0.0852,
+      "aspect_deg": 0.0503,
+      "has_station": 0.0006,
+      "doy_sin": -0.0232,
+      "doy_cos": 0.013,
+      "hist_rain_7d": 0.03
+    }
+  },
+  "baseline_note": "Baseline = block-level reanalysis value copied to every panchayat. Ground truth = Open-Meteo archive at panchayat coordinate (ERA5-based). Time-aware hold-out; no random shuffle.",
+  "leakage_controls": [
+    "Time-ordered split (last 90 days held out)",
+    "hist_rain_7d uses only past days (shift 1)",
+    "No target leakage into features",
+    "Residual learning on top of block baseline"
+  ]
+}
